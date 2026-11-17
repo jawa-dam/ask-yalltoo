@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-brand-cyan: #2fd2ff;
+  --color-brand-blue: #3d3dea;
+  --color-brand-magenta: #f310ba;
+  --color-brand-pink: #ff9df2;
+  --color-brand-dark: #06070d;
+}
+
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --border-color: #e2e8f0;
+  --border-glass: rgba(255, 255, 255, 0.3);
+  --accent: #3d3dea;
+  --accent-hover: #2fd2ff;
+  --shadow-color: rgba(61, 61, 234, 0.08);
+}
+
+.dark {
+  --bg-primary: #06070d;
+  --bg-secondary: #0d0f1a;
+  --bg-tertiary: #131627;
+  --bg-glass: rgba(13, 15, 26, 0.85);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --border-color: #1e293b;
+  --border-glass: rgba(47, 210, 255, 0.1);
+  --accent: #2fd2ff;
+  --accent-hover: #3d3dea;
+  --shadow-color: rgba(47, 210, 255, 0.08);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.search-glow {
+  box-shadow: 0 0 0 1px var(--border-color), 0 4px 24px var(--shadow-color);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-glow:focus-within {
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 32px var(--shadow-color),
+    0 0 60px rgba(47, 210, 255, 0.1);
+}
+
+.water-pattern {
+  background-image: radial-gradient(
+      ellipse at 20% 50%,
+      rgba(47, 210, 255, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(61, 61, 234, 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 80%,
+      rgba(243, 16, 186, 0.02) 0%,
+      transparent 50%
+    );
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
