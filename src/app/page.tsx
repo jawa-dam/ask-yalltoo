@@ -1,8 +1,20 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
+import Image from "next/image";
 import { SearchBar, getSearchHistory, clearSearchHistory } from "@/components/search-bar";
 import { AnswerDisplay } from "@/components/answer-display";
+
+const LOGO_ENTRANCES = [
+  "logo-drop",
+  "logo-zoom",
+  "logo-slide-left",
+  "logo-slide-right",
+  "logo-flip",
+  "logo-bounce",
+  "logo-fade-up",
+  "logo-spin-in",
+] as const;
 
 const SUGGESTED_QUESTIONS = [
   "Is Adam a dam?",
@@ -34,6 +46,10 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
+  const logoEntrance = useMemo(
+    () => LOGO_ENTRANCES[Math.floor(Math.random() * LOGO_ENTRANCES.length)],
+    [],
+  );
 
   const handleSearch = useCallback(async (query: string) => {
     setLoading(true);
@@ -70,15 +86,21 @@ export default function Home() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         {/* Hero */}
         {isHome && (
-          <div className="pt-16 sm:pt-24 pb-8 text-center animate-fade-in">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-3">
-              <span className="gradient-text">ASK</span>{" "}
-              <span style={{ color: "var(--text-primary)" }}>YALLTOO</span>
-            </h1>
-            <p className="text-lg mb-1" style={{ color: "var(--text-secondary)" }}>
+          <div className="pt-16 sm:pt-24 pb-8 text-center">
+            <div className={`${logoEntrance} mb-3`}>
+              <Image
+                src="/ask-yalltoo-logo.png"
+                alt="Ask YallToo"
+                width={767}
+                height={325}
+                priority
+                className="mx-auto w-[280px] sm:w-[380px] h-auto drop-shadow-lg"
+              />
+            </div>
+            <p className="text-lg mb-1 animate-fade-in" style={{ color: "var(--text-secondary)" }}>
               Ask the Questions. Explore the Connections.
             </p>
-            <p className="text-sm" style={{ color: "var(--text-tertiary)" }}>
+            <p className="text-sm animate-fade-in" style={{ color: "var(--text-tertiary)" }}>
               Your Gateway to Genesis Engineered Interpretation
             </p>
           </div>
