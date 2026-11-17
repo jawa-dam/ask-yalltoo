@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-2", "firmament", "heaven", "dam", "separation", "containment"]
 evidence_level: "hypothesis"
 genesis_day: 2
-related: ["overview", "day-1", "day-3", "firmament-analysis", "heaven-analysis", "adam-hypothesis"]
+related: ["genesis/overview", "genesis/day-1", "genesis/day-3", "firmament/firmament", "firmament/heaven", "adam-the-dam/hypothesis"]
 last_updated: "2024-11-17"
 status: "published"
 ---

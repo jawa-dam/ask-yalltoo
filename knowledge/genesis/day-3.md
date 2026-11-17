@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-3", "waters", "dry-land", "millpond", "gathering", "vegetation"]
 evidence_level: "hypothesis"
 genesis_day: 3
-related: ["overview", "day-2", "day-4", "hydrology-basics"]
+related: ["genesis/overview", "genesis/day-2", "genesis/day-4"]
 last_updated: "2024-11-17"
 status: "published"
 ---

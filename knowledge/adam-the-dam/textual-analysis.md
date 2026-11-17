@@ -3,7 +3,7 @@ title: "Adam / A-DAM — Textual Analysis"
 category: "adam-the-dam"
 tags: ["adam", "textual-analysis", "genesis-2", "creation", "formation"]
 evidence_level: "textual"
-related: ["adam-hypothesis", "linguistic-analysis", "engineering-comparison"]
+related: ["adam-the-dam/hypothesis", "adam-the-dam/linguistic-analysis", "adam-the-dam/engineering-comparison"]
 last_updated: "2024-11-17"
 status: "published"
 ---

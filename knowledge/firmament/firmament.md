@@ -4,7 +4,7 @@ category: "firmament"
 tags: ["firmament", "raqia", "dam", "separation", "structure", "day-2"]
 evidence_level: "hypothesis"
 genesis_day: 2
-related: ["day-2", "heaven-analysis", "adam-hypothesis"]
+related: ["genesis/day-2", "firmament/heaven", "adam-the-dam/hypothesis"]
 last_updated: "2024-11-17"
 status: "published"
 ---

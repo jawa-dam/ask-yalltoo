@@ -168,8 +168,8 @@ export function getRelatedDocuments(doc: KnowledgeDocument, limit = 5): Knowledg
     if (other.slug === doc.slug) continue;
     let score = 0;
 
-    if (doc.related.some((r) => other.slug.includes(r))) score += 10;
-    if (other.related.some((r) => doc.slug.includes(r))) score += 8;
+    if (doc.related.some((r) => other.slug === r || other.slug.endsWith("/" + r))) score += 10;
+    if (other.related.some((r) => doc.slug === r || doc.slug.endsWith("/" + r))) score += 8;
     if (other.category === doc.category) score += 3;
 
     const sharedTags = doc.tags.filter((t) => other.tags.includes(t));

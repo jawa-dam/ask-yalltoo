@@ -3,7 +3,7 @@ title: "Miqveh — Ritual Water Collection"
 category: "creation-symbolism"
 tags: ["miqveh", "mikvah", "water", "gathering", "ritual", "day-3"]
 evidence_level: "research-question"
-related: ["day-3", "hydrology-basics"]
+related: ["genesis/day-3"]
 last_updated: "2024-11-17"
 status: "published"
 ---

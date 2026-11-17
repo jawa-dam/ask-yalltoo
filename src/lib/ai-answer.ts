@@ -69,29 +69,45 @@ ${context}
 
 Based ONLY on the above research documents, answer the question. Follow the JSON format specified in your instructions.`;
 
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1500,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: "user", content: userMessage }],
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000);
+
+  let response: Anthropic.Message;
+  try {
+    response = await client.messages.create(
+      {
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1500,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: "user", content: userMessage }],
+      },
+      { signal: controller.signal }
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
 
   const text =
     response.content[0].type === "text" ? response.content[0].text : "";
 
-  let parsed: {
-    directAnswer?: string;
-    geiInterpretation?: string | null;
-    scripturalReferences?: string[];
-    evidenceClassification?: { claim: string; level: string }[];
-    limitations?: string[];
-  };
+  let parsed: Record<string, unknown>;
 
   try {
-    parsed = JSON.parse(text);
+    let jsonText = text.trim();
+    if (jsonText.startsWith("```")) {
+      jsonText = jsonText.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+    }
+    parsed = JSON.parse(jsonText);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+      throw new Error("Not a JSON object");
+    }
   } catch {
+    const cleanedText = text
+      .replace(/```[\s\S]*?```/g, "")
+      .trim()
+      .slice(0, 600);
     return {
-      directAnswer: text.slice(0, 600),
+      directAnswer: cleanedText || "The AI could not generate a structured answer. See the research documents below.",
       geiInterpretation: null,
       methodology,
       scripturalReferences: [],
@@ -102,22 +118,54 @@ Based ONLY on the above research documents, answer the question. Follow the JSON
       })),
       evidenceClassification: [],
       limitations: [
-        "AI response could not be fully structured. Showing raw answer.",
+        "AI response could not be fully structured. The research documents below contain the relevant information.",
       ],
     };
   }
 
+  const directAnswer = typeof parsed.directAnswer === "string" && parsed.directAnswer.trim()
+    ? parsed.directAnswer.trim()
+    : "No answer could be generated from the available research.";
+
+  const geiInterpretation = typeof parsed.geiInterpretation === "string"
+    ? parsed.geiInterpretation.trim() || null
+    : null;
+
+  const scripturalReferences = Array.isArray(parsed.scripturalReferences)
+    ? (parsed.scripturalReferences as unknown[])
+        .filter((r): r is string => typeof r === "string" && r.includes("Genesis"))
+        .slice(0, 10)
+    : [];
+
+  const evidenceClassification = Array.isArray(parsed.evidenceClassification)
+    ? (parsed.evidenceClassification as unknown[])
+        .filter(
+          (e): e is { claim: string; level: string } =>
+            typeof e === "object" &&
+            e !== null &&
+            typeof (e as Record<string, unknown>).claim === "string" &&
+            typeof (e as Record<string, unknown>).level === "string"
+        )
+        .slice(0, 10)
+    : [];
+
+  const limitationsRaw = Array.isArray(parsed.limitations)
+    ? (parsed.limitations as unknown[])
+        .filter((l): l is string => typeof l === "string")
+        .slice(0, 6)
+    : [];
+
   return {
-    directAnswer: parsed.directAnswer || "No answer could be generated from the available research.",
-    geiInterpretation: parsed.geiInterpretation || null,
+    directAnswer,
+    geiInterpretation,
     methodology,
-    scripturalReferences: (parsed.scripturalReferences || []).slice(0, 10),
+    scripturalReferences,
     researchReferences: documents.slice(0, 5).map((doc) => ({
       title: doc.title,
       slug: doc.slug,
       evidenceLevel: doc.evidenceLevel,
     })),
-    evidenceClassification: (parsed.evidenceClassification || []).slice(0, 8),
-    limitations: (parsed.limitations || []).slice(0, 5),
+    evidenceClassification,
+    limitations: limitationsRaw,
   };
 }

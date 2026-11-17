@@ -3,7 +3,7 @@ title: "Genesis Engineered Interpretation — Overview"
 category: "genesis"
 tags: ["overview", "introduction", "framework", "genesis", "engineering"]
 evidence_level: "hypothesis"
-related: ["day-1", "day-2", "day-3", "day-4", "day-5", "day-6", "adam-hypothesis"]
+related: ["genesis/day-1", "genesis/day-2", "genesis/day-3", "genesis/day-4", "genesis/day-5", "genesis/day-6", "adam-the-dam/hypothesis"]
 last_updated: "2024-11-17"
 status: "published"
 ---

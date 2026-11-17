@@ -3,7 +3,7 @@ title: "Heaven in GEI"
 category: "firmament"
 tags: ["heaven", "shamayim", "water", "upper-region", "reservoir"]
 evidence_level: "hypothesis"
-related: ["firmament", "day-2"]
+related: ["firmament/firmament", "genesis/day-2"]
 last_updated: "2024-11-17"
 status: "published"
 ---

@@ -2,6 +2,8 @@
 title: "Limitations and Counterarguments"
 category: "methodology"
 tags: ["limitations", "counterarguments", "criticism", "transparency", "integrity"]
+evidence_level: "framework"
+related: ["gei-methodology", "evidence-classification"]
 last_updated: "2024-11-17"
 status: "published"
 ---

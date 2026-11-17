@@ -2,6 +2,8 @@
 title: "GEI Research Methodology"
 category: "methodology"
 tags: ["methodology", "research", "four-stages", "framework"]
+evidence_level: "framework"
+related: ["evidence-classification", "limitations-and-counterarguments"]
 last_updated: "2024-11-17"
 status: "published"
 ---
