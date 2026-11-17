@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { SearchBar, getSearchHistory, clearSearchHistory } from "@/components/search-bar";
 import { AnswerDisplay } from "@/components/answer-display";
@@ -46,10 +46,10 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
-  const logoEntrance = useMemo(
-    () => LOGO_ENTRANCES[Math.floor(Math.random() * LOGO_ENTRANCES.length)],
-    [],
-  );
+  const [logoEntrance, setLogoEntrance] = useState("");
+  useEffect(() => {
+    setLogoEntrance(LOGO_ENTRANCES[Math.floor(Math.random() * LOGO_ENTRANCES.length)]);
+  }, []);
 
   const handleSearch = useCallback(async (query: string) => {
     setLoading(true);
