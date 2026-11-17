@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { performSearch } from "@/lib/search-engine";
+import { isAIAvailable, generateAIAnswer, type AnswerSection } from "@/lib/ai-answer";
 
 export async function POST(request: NextRequest) {
   try {
@@ -35,7 +36,22 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const answer = generateAnswer(query.trim(), searchResult);
+    let answer: AnswerSection;
+
+    if (isAIAvailable()) {
+      try {
+        answer = await generateAIAnswer(
+          query.trim(),
+          searchResult.context,
+          searchResult.methodology,
+          searchResult.documents
+        );
+      } catch {
+        answer = generateFallbackAnswer(query.trim(), searchResult);
+      }
+    } else {
+      answer = generateFallbackAnswer(query.trim(), searchResult);
+    }
 
     return NextResponse.json({
       answer,
@@ -56,17 +72,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-interface AnswerSection {
-  directAnswer: string;
-  geiInterpretation: string | null;
-  methodology: string[];
-  scripturalReferences: string[];
-  researchReferences: { title: string; slug: string; evidenceLevel: string }[];
-  evidenceClassification: { claim: string; level: string }[];
-  limitations: string[];
-}
-
-function generateAnswer(
+function generateFallbackAnswer(
   query: string,
   searchResult: ReturnType<typeof performSearch>
 ): AnswerSection {
@@ -85,9 +91,7 @@ function generateAnswer(
       }
     }
 
-    const tableRows = doc.content.match(
-      /\| (.+?) \| (.+?) \|/g
-    );
+    const tableRows = doc.content.match(/\| (.+?) \| (.+?) \|/g);
     if (tableRows) {
       for (const row of tableRows) {
         const cells = row
@@ -119,24 +123,37 @@ function generateAnswer(
   let directAnswer = "";
   let geiInterpretation: string | null = null;
 
-  const geiSection = topDoc.content.match(
-    /## GEI Interpretation\n([\s\S]*?)(?=\n## |$)/
-  );
-  const overviewSection = topDoc.content.match(
-    /## (?:Overview|The Core Question|What Is GEI\?)\n([\s\S]*?)(?=\n## |$)/
-  );
+  const answerParts: string[] = [];
 
-  if (overviewSection) {
-    directAnswer = cleanMarkdown(overviewSection[1]).slice(0, 600);
-  } else if (geiSection) {
-    directAnswer = cleanMarkdown(geiSection[1]).slice(0, 600);
+  for (const doc of documents.slice(0, 3)) {
+    const geiSection = doc.content.match(
+      /## GEI Interpretation\n([\s\S]*?)(?=\n## |$)/
+    );
+    const overviewSection = doc.content.match(
+      /## (?:Overview|The Core Question|What Is GEI\?)\n([\s\S]*?)(?=\n## |$)/
+    );
+
+    if (overviewSection) {
+      answerParts.push(cleanMarkdown(overviewSection[1]).slice(0, 300));
+    } else if (geiSection) {
+      answerParts.push(cleanMarkdown(geiSection[1]).slice(0, 300));
+    }
+  }
+
+  if (answerParts.length > 0) {
+    directAnswer = answerParts.join(" ").slice(0, 600);
   } else {
     directAnswer = topDoc.excerpt.slice(0, 400);
   }
 
-  if (geiSection) {
-    geiInterpretation = cleanMarkdown(geiSection[1]).slice(0, 800);
+  const topGeiSection = topDoc.content.match(
+    /## GEI Interpretation\n([\s\S]*?)(?=\n## |$)/
+  );
+  if (topGeiSection) {
+    geiInterpretation = cleanMarkdown(topGeiSection[1]).slice(0, 800);
   }
+
+  void context;
 
   return {
     directAnswer,

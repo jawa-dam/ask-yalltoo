@@ -111,7 +111,7 @@ export default function Home() {
 
         {/* Result */}
         {result && !loading && (
-          <div className="pb-16">
+          <div className="pb-16" aria-live="polite">
             <AnswerDisplay
               answer={result.answer}
               documents={result.documents}
@@ -164,7 +164,7 @@ export default function Home() {
             </section>
 
             {/* Quick Links */}
-            <section className="grid gap-3 sm:grid-cols-3">
+            <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
               <a href="/methodology" className="rounded-xl p-5 text-center transition-all hover:scale-[1.01] gradient-border"
                 style={{ background: "var(--bg-secondary)" }}>
                 <div className="text-2xl mb-2">&#x2699;</div>
@@ -176,6 +176,12 @@ export default function Home() {
                 <div className="text-2xl mb-2">&#x1F4DA;</div>
                 <p className="font-medium text-sm" style={{ color: "var(--text-primary)" }}>Knowledge Library</p>
                 <p className="text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>Browse all research</p>
+              </a>
+              <a href="/knowledge-map" className="rounded-xl p-5 text-center transition-all hover:scale-[1.01] gradient-border"
+                style={{ background: "var(--bg-secondary)" }}>
+                <div className="text-2xl mb-2">&#x1F5FA;</div>
+                <p className="font-medium text-sm" style={{ color: "var(--text-primary)" }}>Knowledge Map</p>
+                <p className="text-xs mt-1" style={{ color: "var(--text-tertiary)" }}>Visualize connections</p>
               </a>
               <a href="/about" className="rounded-xl p-5 text-center transition-all hover:scale-[1.01] gradient-border"
                 style={{ background: "var(--bg-secondary)" }}>

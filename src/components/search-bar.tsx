@@ -28,7 +28,7 @@ export function SearchBar({ onSearch, initialQuery = "", large = false, loading 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full" role="search" aria-label="Search GEI research library">
       <div className={`search-glow rounded-2xl flex items-center gap-3 ${large ? "px-5 py-4" : "px-4 py-3"}`}
         style={{ background: "var(--bg-secondary)" }}>
         <svg width={large ? "22" : "18"} height={large ? "22" : "18"} viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

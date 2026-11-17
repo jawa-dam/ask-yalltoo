@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About GEI — ASK YALLTOO",
+  description:
+    "Learn about Genesis Engineered Interpretation (GEI), an independent research framework founded by Wilbert Bouie Jr. that examines Genesis through the lens of hydraulic engineering.",
+};
 
 export default function AboutPage() {
   return (

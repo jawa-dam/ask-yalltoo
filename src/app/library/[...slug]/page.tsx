@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getAllDocuments, getDocumentBySlug, getRelatedDocuments } from "@/lib/knowledge";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -6,6 +7,16 @@ import html from "remark-html";
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const doc = getDocumentBySlug(slug.join("/"));
+  if (!doc) return { title: "Document Not Found — ASK YALLTOO" };
+  return {
+    title: `${doc.title} — ASK YALLTOO`,
+    description: doc.excerpt.slice(0, 160),
+  };
 }
 
 export async function generateStaticParams() {
