@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { FeedbackForm } from "./feedback-form";
 
 interface AnswerData {
   directAnswer: string;
@@ -41,6 +42,7 @@ const evidenceBadgeColors: Record<string, string> = {
 export function AnswerDisplay({ answer, documents, relatedQuestions, methodology, onAskRelated }: AnswerDisplayProps) {
   const [showMethodology, setShowMethodology] = useState(false);
   const [showEvidence, setShowEvidence] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -72,6 +74,7 @@ export function AnswerDisplay({ answer, documents, relatedQuestions, methodology
           <button
             onClick={() => setShowMethodology(!showMethodology)}
             className="w-full flex items-center justify-between p-5 text-left"
+            aria-expanded={showMethodology}
           >
             <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
               GEI Methodology Applied
@@ -125,6 +128,7 @@ export function AnswerDisplay({ answer, documents, relatedQuestions, methodology
           <button
             onClick={() => setShowEvidence(!showEvidence)}
             className="w-full flex items-center justify-between p-5 text-left"
+            aria-expanded={showEvidence}
           >
             <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
               Evidence Classification
@@ -206,6 +210,27 @@ export function AnswerDisplay({ answer, documents, relatedQuestions, methodology
           </div>
         </section>
       )}
+
+      {/* Research Feedback */}
+      <section className="rounded-xl" style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-color)" }}>
+        <button
+          onClick={() => setShowFeedback(!showFeedback)}
+          className="w-full flex items-center justify-between p-5 text-left"
+        >
+          <h3 className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+            Research Feedback
+          </h3>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" strokeWidth="2"
+            style={{ transform: showFeedback ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        {showFeedback && (
+          <div className="px-5 pb-5">
+            <FeedbackForm context={answer.directAnswer.slice(0, 100)} />
+          </div>
+        )}
+      </section>
 
       {/* Attribution */}
       <div className="text-center text-xs pt-2" style={{ color: "var(--text-tertiary)" }}>

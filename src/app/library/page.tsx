@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { getAllDocuments, getAllCategories } from "@/lib/knowledge";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Knowledge Library — ASK YALLTOO",
+  description:
+    "Browse the GEI research collection. Explore documents on Genesis creation days, the Adam/A-DAM hypothesis, the firmament, and more — organized by category and evidence classification.",
+};
 
 const categoryLabels: Record<string, string> = {
   genesis: "Genesis Days",

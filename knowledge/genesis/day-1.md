@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-1", "light", "darkness", "separation", "water", "creation"]
 evidence_level: "hypothesis"
 genesis_day: 1
-related: ["overview", "day-2", "firmament", "hydrology-basics"]
+related: ["genesis/overview", "genesis/day-2", "firmament/firmament"]
 last_updated: "2024-11-17"
 status: "published"
 ---

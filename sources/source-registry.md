@@ -2,6 +2,8 @@
 title: "GEI Source Registry"
 category: "sources"
 tags: ["sources", "references", "publications", "registry"]
+evidence_level: "reference"
+related: ["genesis/overview"]
 last_updated: "2024-11-17"
 status: "published"
 ---

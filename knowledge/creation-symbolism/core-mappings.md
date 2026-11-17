@@ -3,7 +3,7 @@ title: "GEI Core Concept Mappings"
 category: "creation-symbolism"
 tags: ["mappings", "concepts", "symbolism", "framework", "overview"]
 evidence_level: "hypothesis"
-related: ["overview", "adam-hypothesis", "firmament"]
+related: ["genesis/overview", "adam-the-dam/hypothesis", "firmament/firmament"]
 last_updated: "2024-11-17"
 status: "published"
 ---

@@ -94,6 +94,7 @@ export default function MethodologyPage() {
               <button
                 onClick={() => setActiveStage(isOpen ? null : stage.id)}
                 className="w-full flex items-center gap-4 p-5 text-left"
+                aria-expanded={isOpen}
               >
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold text-white shrink-0"
                   style={{ background: stage.color }}>

@@ -3,7 +3,7 @@ title: "Adam / A-DAM — Linguistic Analysis"
 category: "adam-the-dam"
 tags: ["adam", "linguistics", "hebrew", "wordplay", "etymology"]
 evidence_level: "linguistic"
-related: ["adam-hypothesis", "textual-analysis"]
+related: ["adam-the-dam/hypothesis", "adam-the-dam/textual-analysis"]
 last_updated: "2024-11-17"
 status: "published"
 ---

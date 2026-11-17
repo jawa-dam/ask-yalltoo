@@ -2,6 +2,8 @@
 title: "Evidence Classification System"
 category: "methodology"
 tags: ["evidence", "classification", "standards", "transparency"]
+evidence_level: "framework"
+related: ["gei-methodology", "limitations-and-counterarguments"]
 last_updated: "2024-11-17"
 status: "published"
 ---

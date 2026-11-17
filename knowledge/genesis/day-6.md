@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-6", "adam", "humanity", "land-creatures", "mill-system", "completion"]
 evidence_level: "hypothesis"
 genesis_day: 6
-related: ["overview", "day-5", "adam-hypothesis"]
+related: ["genesis/overview", "genesis/day-5", "adam-the-dam/hypothesis"]
 last_updated: "2024-11-17"
 status: "published"
 ---

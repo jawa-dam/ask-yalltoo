@@ -91,10 +91,33 @@ export function getDocumentBySlug(slug: string): KnowledgeDocument | undefined {
   return getAllDocuments().find((doc) => doc.slug === slug);
 }
 
+const STOP_WORDS = new Set([
+  "the", "is", "a", "an", "of", "in", "to", "and", "or", "for", "on", "it",
+  "as", "at", "by", "be", "was", "are", "were", "been", "do", "does", "did",
+  "has", "have", "had", "this", "that", "what", "how", "why", "when", "where",
+  "which", "who", "with", "from", "not", "but", "can", "will", "about",
+]);
+
+function stemWord(word: string): string {
+  if (word.length <= 3) return word;
+  return word
+    .replace(/tion$/, "t")
+    .replace(/ment$/, "")
+    .replace(/ing$/, "")
+    .replace(/ed$/, "")
+    .replace(/ies$/, "y")
+    .replace(/s$/, "");
+}
+
 export function searchDocuments(query: string): KnowledgeDocument[] {
   const docs = getAllDocuments();
-  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-  if (terms.length === 0) return [];
+  const rawTerms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (rawTerms.length === 0) return [];
+
+  const queryLower = query.toLowerCase();
+  const meaningfulTerms = rawTerms.filter((t) => !STOP_WORDS.has(t));
+  const terms = meaningfulTerms.length > 0 ? meaningfulTerms : rawTerms;
+  const stemmedTerms = terms.map(stemWord);
 
   const scored = docs.map((doc) => {
     let score = 0;
@@ -102,13 +125,28 @@ export function searchDocuments(query: string): KnowledgeDocument[] {
     const contentLower = doc.content.toLowerCase();
     const tagsLower = doc.tags.map((t) => t.toLowerCase());
 
-    for (const term of terms) {
+    if (titleLower.includes(queryLower)) score += 25;
+
+    const firstParagraph = contentLower.slice(0, 500);
+    if (firstParagraph.includes(queryLower)) score += 8;
+
+    for (let i = 0; i < terms.length; i++) {
+      const term = terms[i];
+      const stem = stemmedTerms[i];
+
       if (titleLower.includes(term)) score += 10;
-      if (tagsLower.some((t) => t.includes(term))) score += 5;
+      else if (titleLower.includes(stem)) score += 6;
+
+      if (tagsLower.some((t) => t.includes(term) || t.includes(stem))) score += 5;
       if (doc.category.toLowerCase().includes(term)) score += 3;
 
       const contentMatches = contentLower.split(term).length - 1;
       score += Math.min(contentMatches, 10);
+
+      if (contentMatches === 0) {
+        const stemMatches = contentLower.split(stem).length - 1;
+        score += Math.min(stemMatches, 5);
+      }
     }
 
     if (terms.some((t) => titleLower === t)) score += 20;
@@ -130,8 +168,8 @@ export function getRelatedDocuments(doc: KnowledgeDocument, limit = 5): Knowledg
     if (other.slug === doc.slug) continue;
     let score = 0;
 
-    if (doc.related.some((r) => other.slug.includes(r))) score += 10;
-    if (other.related.some((r) => doc.slug.includes(r))) score += 8;
+    if (doc.related.some((r) => other.slug === r || other.slug.endsWith("/" + r))) score += 10;
+    if (other.related.some((r) => doc.slug === r || doc.slug.endsWith("/" + r))) score += 8;
     if (other.category === doc.category) score += 3;
 
     const sharedTags = doc.tags.filter((t) => other.tags.includes(t));

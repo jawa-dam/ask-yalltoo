@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-5", "whales", "waterwheels", "fish", "birds", "water-power"]
 evidence_level: "hypothesis"
 genesis_day: 5
-related: ["overview", "day-4", "day-6", "whales-waterwheels"]
+related: ["genesis/overview", "genesis/day-4", "genesis/day-6"]
 last_updated: "2024-11-17"
 status: "published"
 ---

@@ -20,6 +20,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-6 text-sm" style={{ color: "var(--text-secondary)" }}>
             <Link href="/" className="hover:opacity-80 transition-opacity">Search</Link>
             <Link href="/library" className="hover:opacity-80 transition-opacity">Knowledge Library</Link>
+            <Link href="/knowledge-map" className="hover:opacity-80 transition-opacity">Knowledge Map</Link>
             <Link href="/methodology" className="hover:opacity-80 transition-opacity">How GEI Thinks</Link>
             <Link href="/about" className="hover:opacity-80 transition-opacity">About GEI</Link>
             <button
@@ -56,6 +57,7 @@ export function Navigation() {
           <div className="md:hidden pb-4 flex flex-col gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
             <Link href="/" onClick={() => setMenuOpen(false)}>Search</Link>
             <Link href="/library" onClick={() => setMenuOpen(false)}>Knowledge Library</Link>
+            <Link href="/knowledge-map" onClick={() => setMenuOpen(false)}>Knowledge Map</Link>
             <Link href="/methodology" onClick={() => setMenuOpen(false)}>How GEI Thinks</Link>
             <Link href="/about" onClick={() => setMenuOpen(false)}>About GEI</Link>
             <button onClick={() => { toggle(); setMenuOpen(false); }} className="text-left">

@@ -4,7 +4,7 @@ category: "genesis"
 tags: ["day-4", "sun", "moon", "stars", "sluice", "headrace", "water-control"]
 evidence_level: "hypothesis"
 genesis_day: 4
-related: ["overview", "day-3", "day-5", "engineering-systems"]
+related: ["genesis/overview", "genesis/day-3", "genesis/day-5"]
 last_updated: "2024-11-17"
 status: "published"
 ---

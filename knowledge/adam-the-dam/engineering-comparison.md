@@ -3,7 +3,7 @@ title: "Adam / A-DAM — Engineering Comparison"
 category: "adam-the-dam"
 tags: ["adam", "dam", "engineering", "earthen-dam", "construction"]
 evidence_level: "engineering-analogy"
-related: ["adam-hypothesis", "textual-analysis"]
+related: ["adam-the-dam/hypothesis", "adam-the-dam/textual-analysis"]
 last_updated: "2024-11-17"
 status: "published"
 ---
